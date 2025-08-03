@@ -33,7 +33,7 @@ export const israeliRSSFeeds: RSSFeed[] = [
   },
   {
     name: 'YNET חדשות',
-    url: 'https://z.ynet.co.il/short/content/RSS/index.html',
+    url: 'https://www.ynet.co.il/Integration/StoryRss2.xml',
     category: 'general'
   },
   {
