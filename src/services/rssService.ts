@@ -18,7 +18,7 @@ export interface RSSFeed {
 export const israeliRSSFeeds: RSSFeed[] = [
   {
     name: 'חדשות 12',
-    url: 'https://rcs.mako.co.il/rss/31750a2610f26110VgnVCM1000005201000aRCRD.xml?Partner=interlink',
+    url: 'https://storage.googleapis.com/mako-sitemaps/rssWebSub.xml',
     category: 'general'
   },
   {
@@ -46,14 +46,20 @@ export const israeliRSSFeeds: RSSFeed[] = [
     url: 'https://www.israelhayom.co.il/rss',
     category: 'general'
   },
+  /* haaretz all sections */
   {
     name: 'הארץ',
     url: 'https://www.haaretz.co.il/srv/htz---all-articles',
     category: 'general'
   },
   {
-    name: 'ספורט וואלה',
+    name: 'ספורט 5',
     url: 'https://sport5.co.il/rss/feed',
+    category: 'sports'
+  },
+  {
+    name: 'ספורט ONE',
+    url: 'https://www.one.co.il/cat/coop/xml/rss/newsfeed.aspx',
     category: 'sports'
   }
 ];
