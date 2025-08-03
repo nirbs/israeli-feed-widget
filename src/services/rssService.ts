@@ -17,6 +17,11 @@ export interface RSSFeed {
 // Israeli news RSS feeds
 export const israeliRSSFeeds: RSSFeed[] = [
   {
+    name: 'חדשות 12',
+    url: 'https://rcs.mako.co.il/rss/31750a2610f26110VgnVCM1000005201000aRCRD.xml?Partner=interlink',
+    category: 'general'
+  },
+  {
     name: 'חדשות 13',
     url: 'https://13tv.co.il/feed/',
     category: 'general'
@@ -24,6 +29,11 @@ export const israeliRSSFeeds: RSSFeed[] = [
   {
     name: 'וואלה חדשות',
     url: 'https://news.walla.co.il/rss/feed',
+    category: 'general'
+  },
+  {
+    name: 'YNET חדשות',
+    url: 'https://z.ynet.co.il/short/content/RSS/index.html',
     category: 'general'
   },
   {
