@@ -46,7 +46,6 @@ export const israeliRSSFeeds: RSSFeed[] = [
     url: 'https://www.israelhayom.co.il/rss',
     category: 'general'
   },
-  /* haaretz all sections */
   {
     name: 'הארץ',
     url: 'https://www.haaretz.co.il/srv/htz---all-articles',
@@ -58,7 +57,7 @@ export const israeliRSSFeeds: RSSFeed[] = [
     category: 'sports'
   },
   {
-    name: 'ספורט ONE',
+    name: 'ONE ספורט',
     url: 'https://www.one.co.il/cat/coop/xml/rss/newsfeed.aspx',
     category: 'sports'
   }
