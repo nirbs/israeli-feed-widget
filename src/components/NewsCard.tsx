@@ -2,7 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { NewsItem, RSSService } from "@/services/rssService";
 import { cn } from "@/lib/utils";
-import { ExternalLink, Clock, AlertCircle, Zap, Trophy, FileText } from "lucide-react";
+import { ExternalLink, Clock, AlertCircle, Zap, Trophy, FileText, Palette } from "lucide-react";
 
 interface NewsCardProps {
   item: NewsItem;
@@ -14,7 +14,8 @@ const categoryIcons = {
   urgent: Zap,
   political: FileText,
   sports: Trophy,
-  general: FileText
+  general: FileText,
+  entertainment: Palette
 };
 
 const categoryColors = {
@@ -22,7 +23,8 @@ const categoryColors = {
   urgent: 'bg-news-urgent text-news-urgent-foreground',
   political: 'bg-news-political text-news-political-foreground',
   sports: 'bg-news-sports text-news-sports-foreground',
-  general: 'bg-secondary text-secondary-foreground'
+  general: 'bg-secondary text-secondary-foreground',
+  entertainment: 'bg-purple-500 text-white'
 };
 
 export const NewsCard = ({ item, variant = 'default' }: NewsCardProps) => {
@@ -79,11 +81,24 @@ export const NewsCard = ({ item, variant = 'default' }: NewsCardProps) => {
               {item.category === 'political' && 'פוליטיקה'}
               {item.category === 'sports' && 'ספורט'}
               {item.category === 'general' && 'כללי'}
+              {item.category === 'entertainment' && 'תרבות'}
             </Badge>
             <ExternalLink className="h-4 w-4 text-muted-foreground" />
           </div>
         </CardHeader>
         <CardContent>
+          {item.image && (
+            <div className="mb-3 rounded-lg overflow-hidden">
+              <img 
+                src={item.image} 
+                alt={item.title}
+                className="w-full h-48 object-cover"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                }}
+              />
+            </div>
+          )}
           <h2 className="font-bold text-lg mb-3 text-right leading-tight">
             {item.title}
           </h2>
@@ -117,6 +132,7 @@ export const NewsCard = ({ item, variant = 'default' }: NewsCardProps) => {
             {item.category === 'political' && 'פוליטיקה'} 
             {item.category === 'sports' && 'ספורט'}
             {item.category === 'general' && 'כללי'}
+            {item.category === 'entertainment' && 'תרבות'}
           </Badge>
           <ExternalLink className="h-4 w-4 text-muted-foreground" />
         </div>

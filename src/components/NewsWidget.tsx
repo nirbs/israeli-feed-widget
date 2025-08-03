@@ -17,12 +17,13 @@ import {
   FileText,
   Settings,
   Grid3X3,
-  List
+  List,
+  Palette
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type ViewMode = 'grid' | 'list' | 'compact';
-type FilterCategory = 'all' | 'breaking' | 'political' | 'sports' | 'general';
+type FilterCategory = 'all' | 'breaking' | 'political' | 'sports' | 'general' | 'entertainment';
 
 export const NewsWidget = () => {
   const [filter, setFilter] = useState<FilterCategory>('all');
@@ -73,6 +74,7 @@ export const NewsWidget = () => {
     political: displayNews.filter(item => item.category === 'political').length,
     sports: displayNews.filter(item => item.category === 'sports').length,
     general: displayNews.filter(item => item.category === 'general').length,
+    entertainment: displayNews.filter(item => item.category === 'entertainment').length,
   };
 
   if (error) {
@@ -161,6 +163,14 @@ export const NewsWidget = () => {
             >
               <Trophy className="h-3 w-3 mr-1" />
               ספורט ({categoryStats.sports})
+            </Badge>
+            <Badge
+              variant={filter === 'entertainment' ? 'default' : 'secondary'}
+              className="cursor-pointer"
+              onClick={() => setFilter('entertainment')}
+            >
+              <Palette className="h-3 w-3 mr-1" />
+              תרבות ({categoryStats.entertainment})
             </Badge>
           </div>
         </div>

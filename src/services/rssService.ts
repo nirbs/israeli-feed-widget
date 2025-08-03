@@ -4,14 +4,14 @@ export interface NewsItem {
   link: string;
   pubDate: string;
   source: string;
-  category: 'breaking' | 'political' | 'sports' | 'general';
+  category: 'breaking' | 'political' | 'sports' | 'general' | 'entertainment';
   image?: string;
 }
 
 export interface RSSFeed {
   name: string;
   url: string;
-  category: 'breaking' | 'political' | 'sports' | 'general';
+  category: 'breaking' | 'political' | 'sports' | 'general' | 'entertainment';
 }
 
 // Israeli news RSS feeds
@@ -60,6 +60,16 @@ export const israeliRSSFeeds: RSSFeed[] = [
     name: 'ONE ספורט',
     url: 'https://www.one.co.il/cat/coop/xml/rss/newsfeed.aspx',
     category: 'sports'
+  },
+  {
+    name: 'וואלה תרבות',
+    url: 'https://rss.walla.co.il/feed/3?type=main',
+    category: 'entertainment'
+  },
+  {
+    name: 'YNET תרבות',
+    url: 'https://www.ynet.co.il/Integration/StoryRss3011.xml',
+    category: 'entertainment'
   }
 ];
 
@@ -87,9 +97,18 @@ export class RSSService {
         const link = item.querySelector('link')?.textContent || '';
         const pubDate = item.querySelector('pubDate')?.textContent || '';
         
-        // Extract image from description if available
+        // Extract image from description or enclosure
+        let image: string | undefined;
         const imageMatch = description.match(/<img[^>]+src="([^">]+)"/);
-        const image = imageMatch ? imageMatch[1] : undefined;
+        if (imageMatch) {
+          image = imageMatch[1];
+        } else {
+          // Try to get image from enclosure tag
+          const enclosure = item.querySelector('enclosure[type^="image"]');
+          if (enclosure) {
+            image = enclosure.getAttribute('url') || undefined;
+          }
+        }
         
         // Clean description from HTML tags
         const cleanDescription = description.replace(/<[^>]*>/g, '').trim();
@@ -125,6 +144,11 @@ export class RSSService {
     if (text.includes('פוליטיקה') || text.includes('ממשלה') || text.includes('כנסת') || 
         text.includes('בחירות') || text.includes('מפלגה')) {
       return 'political';
+    }
+    
+    if (text.includes('תרבות') || text.includes('בידור') || text.includes('קולנוע') || 
+        text.includes('מוזיקה') || text.includes('תיאטרון') || text.includes('טלוויזיה')) {
+      return 'entertainment';
     }
     
     return 'general';
