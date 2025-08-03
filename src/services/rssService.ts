@@ -28,7 +28,7 @@ export const israeliRSSFeeds: RSSFeed[] = [
   },
   {
     name: 'וואלה חדשות',
-    url: 'https://news.walla.co.il/rss/feed',
+    url: 'https://www.walla.co.il/rss',
     category: 'general'
   },
   {
