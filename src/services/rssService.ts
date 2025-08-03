@@ -28,7 +28,7 @@ export const israeliRSSFeeds: RSSFeed[] = [
   },
   {
     name: 'וואלה חדשות',
-    url: 'https://www.walla.co.il/rss',
+    url: 'https://rss.walla.co.il/feed/1?type=main',
     category: 'general'
   },
   {
@@ -48,7 +48,7 @@ export const israeliRSSFeeds: RSSFeed[] = [
   },
   {
     name: 'הארץ',
-    url: 'https://www.haaretz.co.il/cmlink/1.1617539',
+    url: 'https://www.haaretz.co.il/srv/htz---all-articles',
     category: 'general'
   },
   {
