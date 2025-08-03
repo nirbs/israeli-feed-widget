@@ -1,0 +1,159 @@
+export interface NewsItem {
+  title: string;
+  description: string;
+  link: string;
+  pubDate: string;
+  source: string;
+  category: 'breaking' | 'political' | 'sports' | 'general';
+  image?: string;
+}
+
+export interface RSSFeed {
+  name: string;
+  url: string;
+  category: 'breaking' | 'political' | 'sports' | 'general';
+}
+
+// Israeli news RSS feeds
+export const israeliRSSFeeds: RSSFeed[] = [
+  {
+    name: 'חדשות 13',
+    url: 'https://13tv.co.il/feed/',
+    category: 'general'
+  },
+  {
+    name: 'וואלה חדשות',
+    url: 'https://news.walla.co.il/rss/feed',
+    category: 'general'
+  },
+  {
+    name: 'מעריב אונליין',
+    url: 'https://www.maariv.co.il/rss/rssfeeds',
+    category: 'general'
+  },
+  {
+    name: 'ישראל היום',
+    url: 'https://www.israelhayom.co.il/rss',
+    category: 'general'
+  },
+  {
+    name: 'הארץ',
+    url: 'https://www.haaretz.co.il/cmlink/1.1617539',
+    category: 'general'
+  },
+  {
+    name: 'ספורט וואלה',
+    url: 'https://sport5.co.il/rss/feed',
+    category: 'sports'
+  }
+];
+
+// CORS proxy for RSS feeds
+const CORS_PROXY = 'https://api.allorigins.win/get?url=';
+
+export class RSSService {
+  static async fetchRSSFeed(feedUrl: string): Promise<NewsItem[]> {
+    try {
+      const response = await fetch(`${CORS_PROXY}${encodeURIComponent(feedUrl)}`);
+      const data = await response.json();
+      
+      if (!data.contents) {
+        throw new Error('No content received');
+      }
+
+      const parser = new DOMParser();
+      const xmlDoc = parser.parseFromString(data.contents, 'text/xml');
+      
+      const items = Array.from(xmlDoc.querySelectorAll('item'));
+      
+      return items.map(item => {
+        const title = item.querySelector('title')?.textContent || '';
+        const description = item.querySelector('description')?.textContent || '';
+        const link = item.querySelector('link')?.textContent || '';
+        const pubDate = item.querySelector('pubDate')?.textContent || '';
+        
+        // Extract image from description if available
+        const imageMatch = description.match(/<img[^>]+src="([^">]+)"/);
+        const image = imageMatch ? imageMatch[1] : undefined;
+        
+        // Clean description from HTML tags
+        const cleanDescription = description.replace(/<[^>]*>/g, '').trim();
+        
+        return {
+          title: title.trim(),
+          description: cleanDescription,
+          link,
+          pubDate,
+          source: feedUrl,
+          category: this.categorizeNews(title, cleanDescription),
+          image
+        };
+      });
+    } catch (error) {
+      console.error('Error fetching RSS feed:', error);
+      return [];
+    }
+  }
+
+  static categorizeNews(title: string, description: string): NewsItem['category'] {
+    const text = (title + ' ' + description).toLowerCase();
+    
+    if (text.includes('דחוף') || text.includes('חדשות אחרונות') || text.includes('שובר')) {
+      return 'breaking';
+    }
+    
+    if (text.includes('ספורט') || text.includes('כדורגל') || text.includes('ליגה') || 
+        text.includes('מכבי') || text.includes('הפועל') || text.includes('בית"ר')) {
+      return 'sports';
+    }
+    
+    if (text.includes('פוליטיקה') || text.includes('ממשלה') || text.includes('כנסת') || 
+        text.includes('בחירות') || text.includes('מפלגה')) {
+      return 'political';
+    }
+    
+    return 'general';
+  }
+
+  static async fetchAllFeeds(): Promise<NewsItem[]> {
+    const allItems: NewsItem[] = [];
+    
+    for (const feed of israeliRSSFeeds) {
+      try {
+        const items = await this.fetchRSSFeed(feed.url);
+        const itemsWithSource = items.map(item => ({
+          ...item,
+          source: feed.name,
+          category: feed.category !== 'general' ? feed.category : item.category
+        }));
+        allItems.push(...itemsWithSource);
+      } catch (error) {
+        console.error(`Error fetching feed ${feed.name}:`, error);
+      }
+    }
+    
+    // Sort by date (newest first)
+    return allItems.sort((a, b) => 
+      new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime()
+    );
+  }
+
+  static formatTimeAgo(dateString: string): string {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffInMs = now.getTime() - date.getTime();
+    const diffInMinutes = Math.floor(diffInMs / (1000 * 60));
+    const diffInHours = Math.floor(diffInMinutes / 60);
+    const diffInDays = Math.floor(diffInHours / 24);
+
+    if (diffInMinutes < 60) {
+      return `לפני ${diffInMinutes} דקות`;
+    } else if (diffInHours < 24) {
+      return `לפני ${diffInHours} שעות`;
+    } else if (diffInDays < 7) {
+      return `לפני ${diffInDays} ימים`;
+    } else {
+      return date.toLocaleDateString('he-IL');
+    }
+  }
+}

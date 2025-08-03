@@ -61,7 +61,25 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				news: {
+					breaking: 'hsl(var(--news-breaking))',
+					'breaking-foreground': 'hsl(var(--news-breaking-foreground))',
+					urgent: 'hsl(var(--news-urgent))',
+					'urgent-foreground': 'hsl(var(--news-urgent-foreground))',
+					political: 'hsl(var(--news-political))',
+					'political-foreground': 'hsl(var(--news-political-foreground))',
+					sports: 'hsl(var(--news-sports))',
+					'sports-foreground': 'hsl(var(--news-sports-foreground))'
 				}
+			},
+			backgroundImage: {
+				'gradient-primary': 'var(--gradient-primary)',
+				'gradient-news': 'var(--gradient-news)'
+			},
+			boxShadow: {
+				'news': 'var(--shadow-news)',
+				'card': 'var(--shadow-card)'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
