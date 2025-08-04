@@ -138,32 +138,36 @@ export const NewsCard = ({ item, variant = 'default' }: NewsCardProps) => {
         </div>
       </CardHeader>
       <CardContent>
-        {item.image && (
-          <div className="mb-3 rounded-md overflow-hidden">
-            <img 
-              src={item.image} 
-              alt={item.title}
-              className="w-full h-32 object-cover"
-              onError={(e) => {
-                e.currentTarget.style.display = 'none';
-              }}
-            />
+        <div className="flex gap-4">
+          <div className="flex-1">
+            <h3 className="font-semibold text-base mb-2 text-right leading-snug">
+              {item.title}
+            </h3>
+            {item.description && (
+              <p className="text-muted-foreground text-sm mb-3 text-right line-clamp-2">
+                {item.description}
+              </p>
+            )}
+            <div className="flex items-center justify-between text-sm">
+              <span className="flex items-center gap-1 text-muted-foreground">
+                <Clock className="h-4 w-4" />
+                {timeAgo}
+              </span>
+              <span className="font-medium text-primary">{item.source}</span>
+            </div>
           </div>
-        )}
-        <h3 className="font-semibold text-base mb-2 text-right leading-snug">
-          {item.title}
-        </h3>
-        {item.description && (
-          <p className="text-muted-foreground text-sm mb-3 text-right line-clamp-2">
-            {item.description}
-          </p>
-        )}
-        <div className="flex items-center justify-between text-sm">
-          <span className="flex items-center gap-1 text-muted-foreground">
-            <Clock className="h-4 w-4" />
-            {timeAgo}
-          </span>
-          <span className="font-medium text-primary">{item.source}</span>
+          {item.image && (
+            <div className="w-24 h-20 rounded-md overflow-hidden flex-shrink-0">
+              <img 
+                src={item.image} 
+                alt={item.title}
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                }}
+              />
+            </div>
+          )}
         </div>
       </CardContent>
     </Card>
