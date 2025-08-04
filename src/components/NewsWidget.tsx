@@ -237,17 +237,9 @@ export const NewsWidget = () => {
               viewMode === 'list' && "grid-cols-1",
               viewMode === 'compact' && "grid-cols-1 md:grid-cols-2"
             )}>
-              {filteredNews.slice(0, 1).map((item, index) => (
-                <div key={`${item.link}-${index}`} className={viewMode === 'grid' ? "md:col-span-2 lg:col-span-3" : ""}>
-                  <NewsCard 
-                    item={item} 
-                    variant={viewMode === 'grid' ? 'featured' : viewMode === 'compact' ? 'compact' : 'default'} 
-                  />
-                </div>
-              ))}
-              {filteredNews.slice(1).map((item, index) => (
+              {filteredNews.map((item, index) => (
                 <NewsCard 
-                  key={`${item.link}-${index + 1}`}
+                  key={`${item.link}-${index}`}
                   item={item} 
                   variant={viewMode === 'compact' ? 'compact' : 'default'} 
                 />

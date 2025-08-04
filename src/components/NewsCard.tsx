@@ -138,6 +138,18 @@ export const NewsCard = ({ item, variant = 'default' }: NewsCardProps) => {
         </div>
       </CardHeader>
       <CardContent>
+        {item.image && (
+          <div className="mb-3 rounded-md overflow-hidden">
+            <img 
+              src={item.image} 
+              alt={item.title}
+              className="w-full h-32 object-cover"
+              onError={(e) => {
+                e.currentTarget.style.display = 'none';
+              }}
+            />
+          </div>
+        )}
         <h3 className="font-semibold text-base mb-2 text-right leading-snug">
           {item.title}
         </h3>
