@@ -246,26 +246,17 @@ export class RSSService {
     const diffInHours = Math.floor(diffInMinutes / 60);
     const diffInDays = Math.floor(diffInHours / 24);
 
-    console.log('Date parsing:', {
-      input: dateString,
-      parsedDate: date.toISOString(),
-      now: now.toISOString(),
-      diffInMs,
-      diffInMinutes,
-      isValidDate: !isNaN(date.getTime())
-    });
-
     // Handle invalid dates
     if (isNaN(date.getTime())) {
       return 'זמן לא זמין';
     }
 
-    // Handle future dates (allow small clock differences up to 5 minutes)
-    if (diffInMs < -300000) { // -5 minutes
-      return 'זמן עתידי';
+    // Handle future dates - treat them as "now" (common with test data)
+    if (diffInMs < 0) {
+      return 'עכשיו';
     }
 
-    // Handle very recent content (less than 1 minute or slightly future)
+    // Handle very recent content (less than 1 minute)
     if (diffInMinutes < 1) {
       return 'עכשיו';
     } else if (diffInMinutes < 60) {
