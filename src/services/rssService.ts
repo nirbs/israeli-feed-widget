@@ -239,15 +239,19 @@ export class RSSService {
   }
 
   static formatTimeAgo(dateString: string): string {
+    console.log('formatTimeAgo input:', dateString);
     const date = new Date(dateString);
+    console.log('parsed date:', date, 'isValid:', !isNaN(date.getTime()));
     const now = new Date();
     const diffInMs = now.getTime() - date.getTime();
+    console.log('diffInMs:', diffInMs);
     const diffInMinutes = Math.floor(diffInMs / (1000 * 60));
     const diffInHours = Math.floor(diffInMinutes / 60);
     const diffInDays = Math.floor(diffInHours / 24);
 
     // Handle invalid dates or future dates
     if (isNaN(date.getTime()) || diffInMs < 0) {
+      console.log('Invalid date or future date detected');
       return 'זמן לא זמין';
     }
 
