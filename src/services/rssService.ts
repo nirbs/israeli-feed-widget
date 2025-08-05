@@ -239,23 +239,33 @@ export class RSSService {
   }
 
   static formatTimeAgo(dateString: string): string {
-    console.log('formatTimeAgo input:', dateString);
     const date = new Date(dateString);
-    console.log('parsed date:', date, 'isValid:', !isNaN(date.getTime()));
     const now = new Date();
     const diffInMs = now.getTime() - date.getTime();
-    console.log('diffInMs:', diffInMs);
     const diffInMinutes = Math.floor(diffInMs / (1000 * 60));
     const diffInHours = Math.floor(diffInMinutes / 60);
     const diffInDays = Math.floor(diffInHours / 24);
 
-    // Handle invalid dates or future dates
-    if (isNaN(date.getTime()) || diffInMs < 0) {
-      console.log('Invalid date or future date detected');
+    console.log('Date parsing:', {
+      input: dateString,
+      parsedDate: date.toISOString(),
+      now: now.toISOString(),
+      diffInMs,
+      diffInMinutes,
+      isValidDate: !isNaN(date.getTime())
+    });
+
+    // Handle invalid dates
+    if (isNaN(date.getTime())) {
       return 'זמן לא זמין';
     }
 
-    // Handle very recent content (less than 1 minute)
+    // Handle future dates (allow small clock differences up to 5 minutes)
+    if (diffInMs < -300000) { // -5 minutes
+      return 'זמן עתידי';
+    }
+
+    // Handle very recent content (less than 1 minute or slightly future)
     if (diffInMinutes < 1) {
       return 'עכשיו';
     } else if (diffInMinutes < 60) {
