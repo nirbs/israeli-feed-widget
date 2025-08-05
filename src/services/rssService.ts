@@ -246,7 +246,15 @@ export class RSSService {
     const diffInHours = Math.floor(diffInMinutes / 60);
     const diffInDays = Math.floor(diffInHours / 24);
 
-    if (diffInMinutes < 60) {
+    // Handle invalid dates or future dates
+    if (isNaN(date.getTime()) || diffInMs < 0) {
+      return 'זמן לא זמין';
+    }
+
+    // Handle very recent content (less than 1 minute)
+    if (diffInMinutes < 1) {
+      return 'עכשיו';
+    } else if (diffInMinutes < 60) {
       return `לפני ${diffInMinutes} דקות`;
     } else if (diffInHours < 24) {
       return `לפני ${diffInHours} שעות`;
