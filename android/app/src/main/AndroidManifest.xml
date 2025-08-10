@@ -1,5 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="app.lovable.0ef0f2be909b4f949d6761a0e229d7ca">
+    package="com.israelnews.widget">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
