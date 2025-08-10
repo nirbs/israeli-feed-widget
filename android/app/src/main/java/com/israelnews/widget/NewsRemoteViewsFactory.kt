@@ -36,9 +36,11 @@ class NewsRemoteViewsFactory(private val context: Context) : RemoteViewsService.
         val bmp: Bitmap? = try { item.imageUrl?.let { NewsRepository.fetchBitmap(it, 160, 120) } } catch (_: Exception) { null }
         if (bmp != null) rv.setImageViewBitmap(R.id.image, bmp) else rv.setImageViewResource(R.id.image, android.R.drawable.ic_menu_report_image)
 
-        // Click to open link
+        // Click to open link in default browser
         val fillInIntent = Intent(Intent.ACTION_VIEW).apply {
+            addCategory(Intent.CATEGORY_BROWSABLE)
             data = Uri.parse(item.link)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
         rv.setOnClickFillInIntent(R.id.title, fillInIntent)
         rv.setOnClickFillInIntent(R.id.image, fillInIntent)

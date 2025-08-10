@@ -18,7 +18,7 @@ object NewsRepository {
         Pair("וואלה חדשות", "https://rss.walla.co.il/feed/1?type=main")
     )
 
-    fun fetchAll(): List<NewsItem> {
+    fun fetchAll(limit: Int): List<NewsItem> {
         val all = mutableListOf<NewsItem>()
         for ((name, url) in feeds) {
             try {
@@ -28,8 +28,10 @@ object NewsRepository {
             } catch (_: Exception) { /* ignore feed errors */ }
         }
         if (all.isEmpty()) return fallback()
-        return all.sortedByDescending { it.pubDate }.take(20)
+        return all.sortedByDescending { it.pubDate }.take(limit)
     }
+
+    fun fetchAll(): List<NewsItem> = fetchAll(20)
 
     fun fallback(): List<NewsItem> = listOf(
         NewsItem(

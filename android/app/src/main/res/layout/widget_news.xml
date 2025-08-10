@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F7FAFF"
+    android:background="@drawable/widget_bg"
     android:padding="8dp">
 
     <LinearLayout
@@ -13,7 +13,7 @@
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:padding="8dp"
-        android:background="#E6F0FB">
+        android:background="@drawable/widget_header_bg">
 
         <TextView
             android:id="@+id/title"

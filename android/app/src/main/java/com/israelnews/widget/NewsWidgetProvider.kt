@@ -35,8 +35,20 @@ class NewsWidgetProvider : AppWidgetProvider() {
                 )
                 setOnClickPendingIntent(R.id.refresh_button, refreshPendingIntent)
 
-                // Item click: open link
-                val clickIntent = Intent(Intent.ACTION_VIEW)
+                // Header click: open app Activity with more articles
+                val appIntent = Intent(context, MainActivity::class.java).apply {
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                }
+                val appPI = PendingIntent.getActivity(
+                    context, 0, appIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                )
+                setOnClickPendingIntent(R.id.header, appPI)
+
+                // Item click: open link in default browser
+                val clickIntent = Intent(Intent.ACTION_VIEW).apply {
+                    addCategory(Intent.CATEGORY_BROWSABLE)
+                }
                 val clickPI = PendingIntent.getActivity(
                     context, 0, clickIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE

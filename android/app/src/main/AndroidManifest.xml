@@ -24,5 +24,10 @@
             android:name="com.israelnews.widget.NewsWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS"
             android:exported="false" />
+
+        <activity
+            android:name="com.israelnews.widget.MainActivity"
+            android:exported="false"
+            android:label="חדשות ישראל" />
     </application>
 </manifest>
