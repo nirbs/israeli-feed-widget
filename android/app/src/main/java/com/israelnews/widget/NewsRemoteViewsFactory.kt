@@ -44,6 +44,7 @@ class NewsRemoteViewsFactory(private val context: Context) : RemoteViewsService.
         rv.setOnClickFillInIntent(R.id.title, fillInIntent)
         rv.setOnClickFillInIntent(R.id.image, fillInIntent)
         rv.setOnClickFillInIntent(R.id.meta, fillInIntent)
+        rv.setOnClickFillInIntent(R.id.item_root, fillInIntent)
 
         return rv
     }

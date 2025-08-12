@@ -47,9 +47,10 @@ class NewsWidgetProvider : AppWidgetProvider() {
                 setOnClickPendingIntent(R.id.footer_more, appPI)
 
                 // Item click: open link in default browser (MUTABLE for fill-in intents)
-                val clickIntent = Intent(Intent.ACTION_VIEW).apply {
-                    addCategory(Intent.CATEGORY_BROWSABLE)
-                }
+        val clickIntent = Intent(Intent.ACTION_VIEW).apply {
+            addCategory(Intent.CATEGORY_BROWSABLE)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
                 val clickPI = PendingIntent.getActivity(
                     context, 1003, clickIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
