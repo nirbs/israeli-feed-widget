@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
 
         Thread {
             val items = try {
-                NewsRepository.fetchAll(100)
+                NewsRepository.fetchAll(50)
             } catch (_: Exception) {
                 NewsRepository.fallback()
             }

@@ -16,7 +16,7 @@ class NewsRemoteViewsFactory(private val context: Context) : RemoteViewsService.
 
     override fun onDataSetChanged() {
         items = try {
-            NewsRepository.fetchAll()
+            NewsRepository.fetchAll(15)
         } catch (_: Exception) {
             NewsRepository.fallback()
         }
@@ -37,10 +37,9 @@ class NewsRemoteViewsFactory(private val context: Context) : RemoteViewsService.
         if (bmp != null) rv.setImageViewBitmap(R.id.image, bmp) else rv.setImageViewResource(R.id.image, android.R.drawable.ic_menu_report_image)
 
         // Click to open link in default browser
-        val fillInIntent = Intent(Intent.ACTION_VIEW).apply {
+        val url = if (item.link.startsWith("http://") || item.link.startsWith("https://")) item.link else "https://${item.link}"
+        val fillInIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url)).apply {
             addCategory(Intent.CATEGORY_BROWSABLE)
-            data = Uri.parse(item.link)
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
         rv.setOnClickFillInIntent(R.id.title, fillInIntent)
         rv.setOnClickFillInIntent(R.id.image, fillInIntent)

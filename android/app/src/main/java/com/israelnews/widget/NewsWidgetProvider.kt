@@ -30,7 +30,7 @@ class NewsWidgetProvider : AppWidgetProvider() {
                     action = ACTION_REFRESH
                 }
                 val refreshPendingIntent = PendingIntent.getBroadcast(
-                    context, 0, refreshIntent,
+                    context, 1002, refreshIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
                 )
                 setOnClickPendingIntent(R.id.refresh_button, refreshPendingIntent)
@@ -40,18 +40,19 @@ class NewsWidgetProvider : AppWidgetProvider() {
                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 }
                 val appPI = PendingIntent.getActivity(
-                    context, 0, appIntent,
+                    context, 1001, appIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
                 )
                 setOnClickPendingIntent(R.id.header, appPI)
+                setOnClickPendingIntent(R.id.footer_more, appPI)
 
-                // Item click: open link in default browser
+                // Item click: open link in default browser (MUTABLE for fill-in intents)
                 val clickIntent = Intent(Intent.ACTION_VIEW).apply {
                     addCategory(Intent.CATEGORY_BROWSABLE)
                 }
                 val clickPI = PendingIntent.getActivity(
-                    context, 0, clickIntent,
-                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                    context, 1003, clickIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
                 )
                 setPendingIntentTemplate(R.id.widget_list, clickPI)
             }

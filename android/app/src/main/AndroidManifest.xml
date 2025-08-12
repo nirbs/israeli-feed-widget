@@ -27,7 +27,7 @@
 
         <activity
             android:name="com.israelnews.widget.MainActivity"
-            android:exported="false"
+            android:exported="true"
             android:label="חדשות ישראל" />
     </application>
 </manifest>
