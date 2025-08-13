@@ -46,18 +46,6 @@
         android:paddingBottom="8dp" />
 
     <TextView
-        android:id="@+id/footer_more"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Click here for more articles"
-        android:textColor="#0F172A"
-        android:gravity="center"
-        android:padding="10dp"
-        android:background="@drawable/widget_header_bg"
-        android:clickable="true"
-        android:focusable="true" />
-
-    <TextView
         android:id="@+id/empty_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

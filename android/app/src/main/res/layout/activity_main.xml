@@ -3,8 +3,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="12dp"
-    android:background="#ECF2FA">
+    android:padding="8dp"
+    android:background="#C3D4E8">
+
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="8dp"
+        android:background="@drawable/widget_header_bg"
+        android:layout_marginBottom="8dp">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="חדשות ישראל"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+
+        <ImageButton
+            android:id="@+id/refresh_button"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="רענון"
+            android:src="@android:drawable/ic_popup_sync"
+            android:tint="#FFFFFF" />
+    </LinearLayout>
 
     <ProgressBar
         android:id="@+id/progress"
@@ -17,9 +47,10 @@
     <ListView
         android:id="@+id/list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:divider="@android:color/transparent"
         android:dividerHeight="8dp"
-        android:paddingTop="12dp"
-        android:paddingBottom="12dp" />
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp" />
 </LinearLayout>

@@ -44,18 +44,16 @@ class NewsWidgetProvider : AppWidgetProvider() {
                     PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
                 )
                 setOnClickPendingIntent(R.id.header, appPI)
-                setOnClickPendingIntent(R.id.footer_more, appPI)
 
-                // Item click: open link in default browser (MUTABLE for fill-in intents)
-        val clickIntent = Intent(Intent.ACTION_VIEW).apply {
-            addCategory(Intent.CATEGORY_BROWSABLE)
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        }
-                val clickPI = PendingIntent.getActivity(
-                    context, 1003, clickIntent,
+                // Template for both browser links and app opening
+                val templateIntent = Intent().apply {
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                }
+                val templatePI = PendingIntent.getActivity(
+                    context, 1003, templateIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
                 )
-                setPendingIntentTemplate(R.id.widget_list, clickPI)
+                setPendingIntentTemplate(R.id.widget_list, templatePI)
             }
 
             appWidgetManager.updateAppWidget(appWidgetId, views)

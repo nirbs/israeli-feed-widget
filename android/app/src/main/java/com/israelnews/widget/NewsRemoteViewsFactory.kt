@@ -24,9 +24,20 @@ class NewsRemoteViewsFactory(private val context: Context) : RemoteViewsService.
 
     override fun onDestroy() {}
 
-    override fun getCount(): Int = items.size
+    override fun getCount(): Int = items.size + 1 // +1 for footer
 
     override fun getViewAt(position: Int): RemoteViews {
+        // Footer item
+        if (position == items.size) {
+            val rv = RemoteViews(context.packageName, R.layout.widget_footer_item)
+            val appIntent = Intent(context, MainActivity::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            rv.setOnClickFillInIntent(R.id.footer_root, appIntent)
+            return rv
+        }
+
+        // Regular news item
         val item = items[position]
         val rv = RemoteViews(context.packageName, R.layout.widget_news_item)
         rv.setTextViewText(R.id.title, item.title)
@@ -38,13 +49,14 @@ class NewsRemoteViewsFactory(private val context: Context) : RemoteViewsService.
 
         // Click to open link in default browser
         val url = if (item.link.startsWith("http://") || item.link.startsWith("https://")) item.link else "https://${item.link}"
-        val fillInIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url)).apply {
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url)).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             addCategory(Intent.CATEGORY_BROWSABLE)
         }
-        rv.setOnClickFillInIntent(R.id.title, fillInIntent)
-        rv.setOnClickFillInIntent(R.id.image, fillInIntent)
-        rv.setOnClickFillInIntent(R.id.meta, fillInIntent)
-        rv.setOnClickFillInIntent(R.id.item_root, fillInIntent)
+        rv.setOnClickFillInIntent(R.id.title, browserIntent)
+        rv.setOnClickFillInIntent(R.id.image, browserIntent)
+        rv.setOnClickFillInIntent(R.id.meta, browserIntent)
+        rv.setOnClickFillInIntent(R.id.item_root, browserIntent)
 
         return rv
     }
