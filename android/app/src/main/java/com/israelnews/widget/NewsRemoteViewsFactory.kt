@@ -63,13 +63,9 @@ class NewsRemoteViewsFactory(private val context: Context) : RemoteViewsService.
 
     override fun getLoadingView(): RemoteViews? = null
 
-    override fun getViewTypeCount(): Int = 2 // One for articles, one for footer
+    override fun getViewTypeCount(): Int = 1
 
     override fun getItemId(position: Int): Long = position.toLong()
 
     override fun hasStableIds(): Boolean = true
-
-    override fun getViewTypeAt(position: Int): Int {
-        return if (position == items.size) 1 else 0 // 1 for footer, 0 for articles
-    }
 }

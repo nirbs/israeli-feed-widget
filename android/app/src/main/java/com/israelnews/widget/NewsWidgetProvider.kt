@@ -46,7 +46,9 @@ class NewsWidgetProvider : AppWidgetProvider() {
                 setOnClickPendingIntent(R.id.header, appPI)
 
                 // Template for handling clicks - must support both browser and app intents
-                val templateIntent = Intent()
+                val templateIntent = Intent().apply {
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                }
                 val templatePI = PendingIntent.getActivity(
                     context, 1003, templateIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
